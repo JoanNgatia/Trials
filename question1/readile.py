@@ -11,11 +11,10 @@ def education_report(index):
     """
     attended_bootcamp = 0
     no_bootcamp = 0
-    majors = []
+    all_majors = []
     school_majors = []
     education_level = []
     owe_debt = []
-    indices = int(index) + 10
     degrees_levels = ["Ph.D.", "master's degree (non-professional)",
                       "bachelor's degree", "associate\'s degree", " no degree",
                       "high school diploma or equivalent (GED)",
@@ -24,7 +23,7 @@ def education_report(index):
                       ]
     levels = []
     data = open("data.csv").readlines()
-    for val in range(index, indices):
+    for val in range(index, int(index) + 10):
         # Retrieve info for each of the coders in lists for each.
         final_data = data[val].split(",")
 
@@ -42,7 +41,7 @@ def education_report(index):
             school_majors.append(final_data[-2])
         for major in school_majors:
             (major, school_majors.count(major))
-            majors.append(school_majors.count(major))
+            all_majors.append(school_majors.count(major))
 
         # percentage that owe debt and average amount of debt owed
         if final_data[-1] != 'NA\n':
@@ -57,5 +56,5 @@ def education_report(index):
     print "Percentage that attended bootcamps: {}%".format(attended_bootcamp / no_bootcamp * 100)
     print "Percentage owing student debt: {}%".format(len(owe_debt) / (val - len(owe_debt)) * 100)
     print "Average debt owed is: {}".format(sum(owe_debt) / len(owe_debt))
-    print "Most popular school major is: {}".format(school_majors[max(majors)])
+    print "Most popular school major is: {}".format(school_majors[max(all_majors)])
     print "Highest level of educatin is: {}".format(degrees_levels[min(levels)])
