@@ -12,6 +12,7 @@ class User(object):
         self.date_joined = date_joined
         self.repositories = []
         self.followings = []
+        self.followers = []
         self.contributions = []
 
     def create_repository(self, repo_name):
@@ -25,6 +26,7 @@ class User(object):
         self.user = user
         following = User(self.user.username, self.user.email)
         self.followings.append(following)
+        following.followers.append(self)
         return self.followings
 
     def make_contribution(self, repo, contribution_name):
@@ -62,7 +64,7 @@ class GithubUser(object):
         self.followings = user.followings
         self.repositories = user.repositories
         self.contributions = user.contributions
-        self.followers = []
+        self.followers = user.followers
 
 # test code to check accurate creation of Github user.
 userq = User('joanwanjirungatia@gmail.com', 'andela-jngatia')
