@@ -6,7 +6,7 @@
 class User(object):
     """Initialize new user with their details."""
 
-    def __init__(self, email, username, date_joined):
+    def __init__(self, email, username, date_joined='1/1/2016'):
         self.email = email
         self.username = username
         self.date_joined = date_joined
@@ -28,3 +28,23 @@ class Contribution(object):
         self.name = name
         self.repository = repository
         self.creator = creator
+
+
+class GithubUser(object):
+    """Main Github user class."""
+
+    def __init__(self, user):
+        # self.repositories = repositories
+        self.followers = []
+        self.followings = []
+        # self.contributions = contributions
+        self.user = user
+        self.email = user.email
+        self.username = user.username
+
+
+# test code to check accurate creation of Github user.
+userq = User('joanwanjirungatia@gmail.com', 'andela-jngatia')
+print userq.username
+userw = GithubUser(userq)
+print userw.email
