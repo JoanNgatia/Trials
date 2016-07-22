@@ -15,19 +15,24 @@ class User(object):
 class Repository(object):
     """Initialize repository class with attributes."""
 
-    def __init__(self, name, owner, date_created='1/1/2016'):
+    def __init__(self, name, owner):
         self.name = name
-        self.date_created = date_created
-        self.owner = owner
+        # self.date_created = date_created
+        self.owner = owner.username
         self.contributions = []
+
+    def make_contribution(self, contribution_name, creator):
+        self.contribution_name = contribution_name
+        self.creator = creator
+        new_contribution = Contribution(self.contribution_name, self.creator)
+        self.contributions.append(new_contribution)
 
 
 class Contribution(object):
     """Initialize contributions class with its attributes."""
 
-    def __init__(self, name, repository, creator):
+    def __init__(self, name, creator):
         self.name = name
-        self.repository = repository.name
         self.creator = creator.username
 
 
@@ -47,13 +52,20 @@ class GithubUser(object):
 
 # test code to check accurate creation of Github user.
 userq = User('joanwanjirungatia@gmail.com', 'andela-jngatia')
-print userq.username
+userv = User('mamaashley19@gmail.com', 'mmaashley')
+# print userq.username
 userw = GithubUser(userq)
-print userw.email
+# print userw.email
 
 repo2 = Repository('trials', userq)
-print repo2.owner.username
+# print repo2.owner.username
 
-contribution1 = Contribution('just try', repo2, userq)
-print contribution1.creator
-print contribution1.repository
+# contribution1 = Contribution('just try', repo2, userq)
+# print contribution1.creator
+# print contribution1.repository
+repo2.make_contribution('just try', userq)
+repo2.make_contribution('Ash', userq)
+repo2.make_contribution('Genevieve', userv)
+for contribution in repo2.contributions:
+    # import pdb; pdb.set_trace()
+    print contribution.name, contribution.creator
