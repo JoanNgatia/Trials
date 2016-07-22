@@ -12,6 +12,7 @@ class User(object):
         self.date_joined = date_joined
         self.repositories = []
         self.followings = []
+        self.contributions = []
 
     def create_repository(self, repo_name):
         self.repo_name = repo_name
@@ -26,6 +27,14 @@ class User(object):
         self.followings.append(following)
         return self.followings
 
+    def make_contribution(self, repo, contribution_name):
+        self.repo = repo
+        self.contribution_name = contribution_name
+        new_contribution = Contribution(
+            self.contribution_name, self.username, self.repo.name)
+        self.contributions.append(new_contribution)
+        return self.contributions
+
 
 class Repository(object):
     """Initialize repository class with attributes."""
@@ -33,21 +42,15 @@ class Repository(object):
     def __init__(self, name, owner):
         self.name = name
         self.owner = owner
-        self.contributions = []
-
-    def make_contribution(self, contribution_name, creator):
-        self.contribution_name = contribution_name
-        self.creator = creator
-        new_contribution = Contribution(self.contribution_name, self.creator)
-        self.contributions.append(new_contribution)
 
 
 class Contribution(object):
     """Initialize contributions class with its attributes."""
 
-    def __init__(self, name, creator):
+    def __init__(self, name, creator, repo):
         self.name = name
-        self.creator = creator.username
+        self.creator = creator
+        self.repo = repo
 
 
 class GithubUser(object):
@@ -58,28 +61,23 @@ class GithubUser(object):
         self.user = user
         self.followings = user.followings
         self.repositories = user.repositories
+        self.contributions = user.contributions
         self.followers = []
 
 # test code to check accurate creation of Github user.
 userq = User('joanwanjirungatia@gmail.com', 'andela-jngatia')
 userv = User('mamaashley19@gmail.com', 'mmaashley')
 repo2 = Repository('trials', userq)
-repo2.make_contribution('just try', userq)
-repo2.make_contribution('Ash', userq)
-repo2.make_contribution('Genevieve', userv)
 userq.create_repository('Bucketlists')
 userq.follow_person(userv)
-# .make_contribution('trials2', userv)
-# userq.create_repository(repo2)
+userq.make_contribution(repo2, 'fewere contribution')
 userw = GithubUser(userq)
-# for repository in userw.repositories:
-    # print repository.name, repository.contributions
+
+for contribution in userw.contributions:
+    print "{} by {}".format(contribution.name, contribution.creator)
+
+for repository in userw.repositories:
+    print repository.name
 
 for following in userw.followings:
     print following.username, following.email
-# print userw.repositories
-# print userw.contributions
-
-# for contribution in repo2.contributions:
-#     # import pdb; pdb.set_trace()
-#     print contribution.name, contribution.creator
