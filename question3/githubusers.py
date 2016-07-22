@@ -15,10 +15,11 @@ class User(object):
 class Repository(object):
     """Initialize repository class with attributes."""
 
-    def __init__(self, name, date_created, owner):
+    def __init__(self, name, owner, date_created='1/1/2016'):
         self.name = name
         self.date_created = date_created
         self.owner = owner
+        self.contributions = []
 
 
 class Contribution(object):
@@ -26,14 +27,15 @@ class Contribution(object):
 
     def __init__(self, name, repository, creator):
         self.name = name
-        self.repository = repository
-        self.creator = creator
+        self.repository = repository.name
+        self.creator = creator.username
 
 
 class GithubUser(object):
     """Main Github user class."""
 
     def __init__(self, user):
+        """Pass in instance of User class."""
         # self.repositories = repositories
         self.followers = []
         self.followings = []
@@ -48,3 +50,10 @@ userq = User('joanwanjirungatia@gmail.com', 'andela-jngatia')
 print userq.username
 userw = GithubUser(userq)
 print userw.email
+
+repo2 = Repository('trials', userq)
+print repo2.owner.username
+
+contribution1 = Contribution('just try', repo2, userq)
+print contribution1.creator
+print contribution1.repository
