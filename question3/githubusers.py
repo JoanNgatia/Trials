@@ -10,32 +10,6 @@ class User(object):
         self.email = email
         self.username = username
         self.date_joined = date_joined
-        # self.repositories = []
-        # self.followings = []
-        # self.followers = []
-        # self.contributions = []
-
-    # def create_repository(self, repo_name):
-    #     self.repo_name = repo_name
-    #     new_repository = Repository(
-    #         self.repo_name, self.username)
-    #     self.repositories.append(new_repository)
-    #     return self.repositories
-
-    # def follow_person(self, user):
-    #     self.user = user
-    #     following = User(self.user.username, self.user.email)
-    #     self.followings.append(following)
-    #     following.followers.append(self)
-    #     return self.followings
-
-    # def make_contribution(self, repo, contribution_name):
-    #     self.repo = repo
-    #     self.contribution_name = contribution_name
-    #     new_contribution = Contribution(
-    #         self.contribution_name, self.username, self.repo.name)
-    #     self.contributions.append(new_contribution)
-    #     return self.contributions
 
 
 class Repository(object):
@@ -97,5 +71,9 @@ userv = GithubUser('mamaashley19@gmail.com', 'mmaashley', '1/2/2016')
 repo2 = Repository('bucketlists', userw)
 contribution1 = Contribution('buckets', userw, repo2)
 userw.follow_person(userv)
+userw.make_contribution(repo2, 'bucketlists')
 for person in userw.followings:
     print person.username
+
+for contribution in userw.contributions:
+    print contribution.name
